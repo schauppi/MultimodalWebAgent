@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "handlers": {
+        "console_info": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
+        "console_error": {
+            "class": "logging.StreamHandler",
+            "level": "ERROR",
+            "formatter": "error",
+            "stream": "ext://sys.stderr"
+        }
+    },
+    "formatters": {
+        "simple": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        },
+        "error": {
+            "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(exc_info)s"
+        }
+    },
+    "root": {
+        "level": "INFO",
+        "handlers": ["console_info", "console_error"]
+    }
+}
