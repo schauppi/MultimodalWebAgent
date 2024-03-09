@@ -1,4 +1,3 @@
-import logging.config
 import json
 import os
 from typing import Optional
@@ -12,9 +11,12 @@ def setup_logging(default_path: str = 'logging_config.json', default_level: int 
     value: Optional[str] = os.getenv(env_key, None)
     if value:
         path = value
-    if os.path.exists(path):
-        with open(path, 'rt') as f:
-            config: dict = json.load(f)
-        logging.config.dictConfig(config)
-    else:
-        logging.basicConfig(level=default_level)
+    try:
+        if os.path.exists(path):
+            with open(path, 'rt') as f:
+                config: dict = json.load(f)
+            logging.config.dictConfig(config)
+        else:
+            logging.basicConfig(level=default_level)
+    except Exception as e:
+        print(f"Error occurred while setting up logging: {e}")
