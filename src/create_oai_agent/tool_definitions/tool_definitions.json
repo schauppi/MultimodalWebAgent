@@ -1,0 +1,118 @@
+{
+    "input_text": {
+      "name": "input_text",
+      "description": "Interacts with a webpage by sending keys to input fields based on a provided query, and returns a response string with the result of the action or an error message. The process includes highlighting input elements, taking a screenshot for analysis, and then processing the inputs as per the query.",
+      "parameters": {
+        "query": {
+          "description": "The query to be used for identifying the input fields and the keys to be sent.",
+          "examples": [
+            "Type 'OpenAI' into the 'Search' input field.",
+            "Type example@gmail.com into the 'Email' input field, and type 'securePassword!' into the 'Password' input field.",
+            "Enter '123 Main St' into the address field and select 'United States' from the country dropdown."
+          ],
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"]
+    },
+    "click_element": {
+      "name": "click_element",
+      "description": "Clicks on a webpage element based on a user query.",
+      "parameters": {
+        "query": {
+          "description": "A query string representing the user's description of the target element to click.",
+          "examples": [
+            "Click the 'Submit' button.",
+            "Click on the link titled 'Read More'.",
+            "Select the checkbox next to 'I Agree'."
+          ],
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"]
+    },
+    "jump_to_search_engine": {
+      "name": "jump_to_search_engine",
+      "description": "Navigates to the Google search engine using a WebDriver instance, and returns a response string with the result of the action and the current URL.",
+      "parameters": {},
+      "required": []
+    },
+    "read_url": {
+      "name": "read_url",
+      "description": "Reads the content of a URL using a WebDriver instance adapted for Playwright, executes a script to remove popups, and returns the current URL.",
+      "parameters": {
+        "url": {
+          "description": "The URL to read.",
+          "examples": [
+            "https://www.example.com",
+            "www.example.com"
+          ],
+          "title": "URL",
+          "type": "string"
+        }
+      },
+      "required": ["url"]
+    },
+    "scroll": {
+      "name": "scroll",
+      "description": "Scrolls the webpage in a specified direction ('up' or 'down') by a fixed amount of pixels and returns a response string with the result of the action.",
+      "parameters": {
+        "direction": {
+          "description": "The direction to scroll the webpage in.",
+          "enum": ["up", "down"],
+          "examples": ["up", "down"],
+          "title": "Direction",
+          "type": "string"
+        }
+      },
+      "required": ["direction"]
+    },
+    "wait": {
+      "name": "wait",
+      "description": "Waits for 5 seconds and returns a response string with the result of the action and the current URL.",
+      "parameters": {},
+      "required": []
+    },
+    "analyze_content": {
+      "name": "analyze_content",
+      "description": "Analyzes the content of a webpage based on a screenshot and a user query, and returns a response string with insights and answers.",
+      "parameters": {
+        "query": {
+          "description": "A query string representing the user's inquiry about the contents of the current web browser window.",
+          "examples": [
+            "What are the main headlines in this news article screenshot?",
+            "Is there any contact information available on this page?"
+          ],
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"]
+    },
+    "go_back": {
+      "name": "go_back",
+      "description": "Navigates back one page in the browser history using a WebDriver instance, and returns a response string with the result of the action and the current URL.",
+      "parameters": {},
+      "required": []
+    },
+    "save_to_file": {
+      "name": "save_to_file",
+      "description": "Saves the data to a file.",
+      "parameters": {
+        "data": {
+          "description": "The data to save to the file.",
+          "examples": [
+            "This is some example data.",
+            "{\"name\": \"John\", \"age\": 30}",
+            "12345"
+          ],
+          "title": "Data",
+          "type": "string"
+        }
+      },
+      "required": ["data"]
+    }
+  }
+  
