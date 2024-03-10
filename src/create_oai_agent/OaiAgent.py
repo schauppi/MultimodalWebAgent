@@ -17,9 +17,18 @@ class OAIAssistantCreator:
     Class responsible for creating an OpenAI assistant with specified tools and instructions.
     """
 
-    def __init__(self, dotenv_path, config_path, instruction_path, assistant_save_path):
+    def __init__(self, dotenv_path: str, config_path: str, instruction_path: str, assistant_save_path: str) -> None:
         """
         Initialize the creator with paths to necessary configurations and instructions.
+
+        Args:
+            dotenv_path (str): Path to the .env file.
+            config_path (str): Path to the tool definitions JSON file.
+            instruction_path (str): Path to the instructions JSON file.
+            assistant_save_path (str): Path to the file to save the assistant ID.
+
+        Returns:
+            None
         """
         self.dotenv_path = dotenv_path
         self.config_path = config_path
