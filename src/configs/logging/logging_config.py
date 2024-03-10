@@ -5,7 +5,7 @@ from typing import Optional
 import logging.config
 
 
-def setup_logging(default_path: str = 'logging_config.json', default_level: int = logging.INFO, env_key: str = 'LOG_CFG') -> None:
+def setup_logging(default_path: str = 'src/configs/logging/logging_config.json', default_level: int = logging.INFO) -> None:
     """
     Setup logging configuration.
 
@@ -18,9 +18,6 @@ def setup_logging(default_path: str = 'logging_config.json', default_level: int 
         None
     """
     path: str = default_path
-    value: Optional[str] = os.getenv(env_key, None)
-    if value:
-        path = value
     try:
         if os.path.exists(path):
             with open(path, 'rt') as f:
