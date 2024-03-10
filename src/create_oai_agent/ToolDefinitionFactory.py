@@ -59,6 +59,7 @@ class ToolDefinitionFactory:
 
         try:
             return {
+                "type": 'function',
                 "function": {
                     "name": tool_config['name'],
                     "description": tool_config['description'],
