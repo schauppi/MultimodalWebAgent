@@ -68,7 +68,7 @@ class GetConfig:
         try:
             config_list = config_list_from_json(
                 env_or_file=config_path,
-                filter_dict={"model": "gpt-4-turbo-preview"}
+                filter_dict={"model": os.environ.get('OPENAI_MODEL', '')}
             )
             logger.info('Config list loaded successfully')
             for config in config_list:
