@@ -5,8 +5,8 @@ from datetime import datetime
 from dotenv import load_dotenv
 import openai
 
-from src.utils.logging.log_config import setup_logging
-from src.create_oai_agent.ToolDefinitionFactory import ToolDefinitionFactory
+from src.configs.logging.logging_config import setup_logging
+from src.create_oai_agent.tool_definition_factory import ToolDefinitionFactory
 
 setup_logging()
 logger = logging.getLogger(__name__)
@@ -176,7 +176,7 @@ if __name__ == "__main__":
         os.path.dirname(__file__), '..', '..', '.env'))
     config_path = 'src/create_oai_agent/utils/tool_definitions.json'
     instruction_path = 'src/create_oai_agent/utils/oai_instructions.json'
-    assistant_save_path = "src/create_oai_agent/utils/assistant_id.json"
+    assistant_save_path = "src/data/assistant_id.json"
 
     creator = OAIAssistantCreator(
         dotenv_path, config_path, instruction_path, assistant_save_path)

@@ -1,4 +1,4 @@
-from src.utils.logging.log_config import setup_logging
+from src.configs.logging.logging_config import setup_logging
 import json
 import logging
 
