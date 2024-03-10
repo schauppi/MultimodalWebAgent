@@ -1,4 +1,4 @@
-from src.utils.logging.log_config import setup_logging
+from src.configs.logging.logging_config import setup_logging
 import autogen
 from autogen import config_list_from_json
 import logging
@@ -63,8 +63,7 @@ class GetConfig:
         Returns:
             dict: The enriched config list.
         """
-        config_path = os.path.join(
-            os.path.dirname(__file__), "OAI_CONFIG_LIST")
+        config_path = 'src/autogen_configuration/utils/oai_config_list.json'
         try:
             config_list = config_list_from_json(
                 env_or_file=config_path,
