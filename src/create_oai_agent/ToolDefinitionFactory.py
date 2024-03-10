@@ -8,10 +8,29 @@ logger = logging.getLogger(__name__)
 
 
 class ToolDefinitionFactory:
-    def __init__(self, config_path):
+    """
+    Factory class for creating tool definitions.
+    """
+
+    def __init__(self, config_path: str) -> None:
+        """
+        Initialize the factory with the path to the configuration file.
+
+        Args:
+            config_path (str): The path to the configuration file.
+        """
         self.config = self.load_config(config_path)
 
-    def load_config(self, path):
+    def load_config(self, path: str) -> dict:
+        """
+        Load the configuration data from the configuration file.
+
+        Args:
+            path (str): The path to the configuration file.
+
+        Returns:
+            dict: The loaded configuration data.
+        """
         try:
             with open(path, 'r') as file:
                 return json.load(file)
@@ -23,7 +42,16 @@ class ToolDefinitionFactory:
                 f"Failed to parse JSON from config file at path: {path}")
             raise
 
-    def create_tool_definition(self, tool_type):
+    def create_tool_definition(self, tool_type: str) -> dict:
+        """
+        Create a tool definition based on the tool type.
+
+        Args:
+            tool_type (str): The type of the tool.
+
+        Returns:
+            dict: The tool definition.
+        """
         tool_config = self.config.get(tool_type)
         if not tool_config:
             logger.error(f"No tool definition found for type: {tool_type}")
