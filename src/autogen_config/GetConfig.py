@@ -25,9 +25,12 @@ class GetConfig:
     Get and enrich config from config file.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         """
         Initialize with API key and config list.
+
+        Args:
+            None
         """
         logger.info('Initializing GetConfig class')
         self.api_key = os.environ.get('OPENAI_API_KEY', '')
@@ -36,17 +39,29 @@ class GetConfig:
         self.config_list = self.load_and_enrich_config_list()
 
     @property
-    def base_dir(self):
+    def base_dir(self) -> str:
         """
         Returns the base directory path.
+
+        Args:
+            None
+
+        Returns:
+            str: The base directory path.
         """
         base_dir = os.path.dirname(os.path.dirname(__file__))
         logger.info(f'Retrieved base directory path: {base_dir}')
         return base_dir
 
-    def load_and_enrich_config_list(self):
+    def load_and_enrich_config_list(self) -> dict:
         """
         Loads config list from a JSON file and enriches it with the API key.
+
+        Args:
+            None
+
+        Returns:
+            dict: The enriched config list.
         """
         config_path = os.path.join(
             os.path.dirname(__file__), "OAI_CONFIG_LIST")

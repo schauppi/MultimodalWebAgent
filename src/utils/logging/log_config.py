@@ -6,7 +6,17 @@ import logging.config
 
 
 def setup_logging(default_path: str = 'logging_config.json', default_level: int = logging.INFO, env_key: str = 'LOG_CFG') -> None:
-    """Setup logging configuration"""
+    """
+    Setup logging configuration.
+
+    Args:
+        default_path (str): The default path to the logging configuration file.
+        default_level (int): The default logging level.
+        env_key (str): The environment variable key to check for a custom logging configuration file path.
+
+    Returns:
+        None
+    """
     path: str = default_path
     value: Optional[str] = os.getenv(env_key, None)
     if value:
