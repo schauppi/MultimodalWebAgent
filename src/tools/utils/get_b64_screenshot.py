@@ -1,4 +1,5 @@
 from src.configs.logging.logging_config import setup_logging
+from src.tools.utils.save_screenshot import save_screenshot_to_file
 import base64
 import os
 import logging
@@ -32,6 +33,8 @@ def get_b64_screenshot(driver, element=None) -> str:
             screenshot = base64.b64encode(image_file.read()).decode("utf-8")
 
         os.remove(temp_file_path)
+
+        _ = save_screenshot_to_file(screenshot)
 
         return screenshot
     except Exception as e:

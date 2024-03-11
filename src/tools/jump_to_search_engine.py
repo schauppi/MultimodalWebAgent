@@ -1,5 +1,6 @@
 from src.webdriver.webdriver import WebDriver
 from src.configs.logging.logging_config import setup_logging
+from src.tools.utils.get_webdriver_instance import get_webdriver_instance
 
 import logging
 import time
@@ -20,8 +21,7 @@ def jump_to_search_engine() -> str:
     """
 
     try:
-        webdriver = WebDriver.getInstance()
-        driver = webdriver.getDriver()
+        driver = get_webdriver_instance()
 
         driver.goto("https://www.google.com")
 

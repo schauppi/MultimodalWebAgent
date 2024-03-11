@@ -3,11 +3,10 @@ from src.configs.logging.logging_config import setup_logging
 from src.tools.utils.get_b64_screenshot import get_b64_screenshot
 from src.tools.utils.vision_template import get_vision_template
 from src.tools.utils.analyze_image import analyze_image
-from src.tools.utils.save_screenshot import save_screenshot_to_file
 from src.tools.utils.load_context import load_context
+from src.tools.utils.get_webdriver_instance import get_webdriver_instance
 
 import logging
-import json
 
 setup_logging()
 logger = logging.getLogger()
@@ -25,11 +24,9 @@ def analyze_content(query: str) -> str:
     """
     try:
         logger.info("Initializing WebDriver to capture a webpage screenshot.")
-        webdriver = WebDriver.getInstance()
-        driver = webdriver.getDriver()
+        driver = get_webdriver_instance()
 
         screenshot_b64 = get_b64_screenshot(driver)
-        _ = save_screenshot_to_file(screenshot_b64)
 
         context = load_context("analyze_content")
 

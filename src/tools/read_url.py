@@ -1,5 +1,6 @@
 from src.webdriver.webdriver import WebDriver
 from src.configs.logging.logging_config import setup_logging
+from src.tools.utils.get_webdriver_instance import get_webdriver_instance
 
 import logging
 
@@ -23,8 +24,7 @@ def read_url(url: str) -> str:
             url = 'https://' + url
 
         logger.info(f"Reading URL: {url}")
-        driver_instance = WebDriver.getInstance()
-        driver = driver_instance.getDriver()
+        driver = get_webdriver_instance()
         driver.goto(url)
 
         return "Current URL is: " + driver.url + "\n"
