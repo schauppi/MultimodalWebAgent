@@ -11,6 +11,7 @@ from src.tools.click_element import click_element
 from src.tools.input_text import input_text
 from src.tools.analyze_content import analyze_content
 from src.tools.save_to_file import save_to_file
+from src.oai_agent.utils.prompt import prompt
 
 import logging
 import autogen
@@ -80,6 +81,15 @@ def register_functions(agent):
 
 
 def create_user_proxy():
+    """
+    Create a User Proxy Agent.
+
+    Args:
+        None
+
+    Returns:
+        UserProxyAgent: An instance of the UserProxyAgent.
+    """
     logger.info("Creating User Proxy Agent...")
     user_proxy = autogen.UserProxyAgent(
         name="user_proxy",
@@ -95,30 +105,21 @@ def create_user_proxy():
 
 
 def main():
+    """
+    Main function to run the GPT Assistant Agent.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     try:
         gpt_assistant = configure_agent()
         register_functions(gpt_assistant)
         user_proxy = create_user_proxy()
-        profile_message = """
-
-        TASK: I need to go to the LinkedIn Profile of {INFO}. This is crucial for my research.
-
-        Do not click on other profiles or send any messages to {INFO}.
-        
-        The steps to complete this task are:
-
-        1. Go to LinkedIn using the 'read_url' tool
-        2. Cick on the search button using the 'click_element' tool
-        3. Search for {INFO} using the 'input_text' tool
-        4. Click on the profile name of {INFO} to get to the page using the 'click_element' tool. Do not send an connection request or message to {INFO}.
-        5. Analyze the content of the page using the 'analyze_content' tool
-
-        You have finished the task when you see the LinkedIn profile for {INFO}.
-
-        Write 'TERMINATE' to end the conversation.
-        """
         user_proxy.initiate_chat(
-            gpt_assistant, message=profile_message.format(INFO="Elon Musk"))
+            gpt_assistant, message=prompt)
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
 
