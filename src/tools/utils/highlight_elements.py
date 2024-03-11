@@ -31,7 +31,7 @@ def format_description(elements: list) -> tuple:
     return bbox_descriptions, bbox_coordinates
 
 
-def highlight_elements(driver, mark: Literal["click", "input", "all", "remove"]) -> tuple or str:
+def highlight_elements(driver, mark: Literal["click", "input", "all", "remove"]):
     """
     Highlights elements on a webpage based on the mark type.
 
@@ -44,35 +44,39 @@ def highlight_elements(driver, mark: Literal["click", "input", "all", "remove"])
         In case of errors, it returns an error message.
     """
     if mark not in ["click", "input", "all", "remove"]:
-        error_message = "Mark must be either 'click', 'input', 'all' or 'remove'."
-        logger.error(error_message)
-        raise ValueError(error_message)
+        raise ValueError(
+            "Mark must be either 'click', 'input', 'all' or 'remove'.")
 
     try:
         with open('src/tools/utils/mark_page.js') as f:
             mark_page_script = f.read()
 
-        if mark in ["click", "input", "all"]:
-            action_function = {
-                "click": "markClickableElements",
-                "input": "markInputElements",
-                "all": "markAllElements"
-            }[mark]
-
+        if mark == "click":
             elements = driver.evaluate(f"""() => {{
                 {mark_page_script}
-                return {action_function}();
+                return markClickableElements();
             }}""")
             bbox_descriptions, bbox_coordinates = format_description(elements)
-            logger.info(f"Elements marked: {mark}")
+            return bbox_descriptions, bbox_coordinates, driver
+        elif mark == "input":
+            elements = driver.evaluate(f"""() => {{
+                {mark_page_script}
+                return markInputElements();
+            }}""")
+            bbox_descriptions, bbox_coordinates = format_description(elements)
+            return bbox_descriptions, bbox_coordinates, driver
+        elif mark == "all":
+            elements = driver.evaluate(f"""() => {{
+                {mark_page_script}
+                return markAllElements();
+            }}""")
+            bbox_descriptions, bbox_coordinates = format_description(elements)
             return bbox_descriptions, bbox_coordinates, driver
         else:
             driver.evaluate(f"""() => {{
                 {mark_page_script}
                 return unmarkPage();
             }}""")
-            logger.info("Elements unmarked.")
             return driver
     except Exception as e:
-        logger.error(f"Failed to highlight elements: {e}")
         return str(e)

@@ -14,22 +14,6 @@ setup_logging()
 logger = logging.getLogger()
 
 
-def remove_highlights(driver) -> None:
-    """
-    Removes all highlights from elements on the page.
-
-    Args:
-        driver (WebDriver): An instance of the WebDriver.
-
-    Returns:
-        None
-    """
-    try:
-        driver = highlight_elements(driver, "remove")
-    except Exception as e:
-        logger.warning("Failed to remove highlights: %s", e, exc_info=True)
-
-
 def click_element(query: str) -> str:
     """
     Clicks on a webpage element based on a user query, and returns a response string with the result of the action.
@@ -46,7 +30,7 @@ def click_element(query: str) -> str:
         bbox_descriptions, bbox_coordinates, driver = highlight_elements(
             driver, "click")
         screenshot = get_b64_screenshot(driver)
-        remove_highlights(driver)
+        driver = highlight_elements(driver, "remove")
     except Exception as e:
         logger.error("Error highlighting elements: %s", e, exc_info=True)
         return "Failed to highlight clickable elements. Please check the logs for more details."
