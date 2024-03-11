@@ -179,7 +179,7 @@ class OAIAssistantCreator:
         logger.info("OAIAssistantCreator process completed successfully.")
 
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     dotenv_path = os.path.normpath(os.path.join(
         os.path.dirname(__file__), '..', '..', '.env'))
     config_path = 'src/create_oai_agent/utils/tool_definitions.json'
@@ -188,4 +188,4 @@ if __name__ == "__main__":
 
     creator = OAIAssistantCreator(
         dotenv_path, config_path, instruction_path, assistant_save_path)
-    creator.run()
+    creator.run()"""
