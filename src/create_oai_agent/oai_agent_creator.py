@@ -15,6 +15,14 @@ logger = logging.getLogger(__name__)
 class OAIAssistantCreator:
     """
     Class responsible for creating an OpenAI assistant with specified tools and instructions.
+
+    Methods:
+        load_environment() -> None:
+            Load environment variables from the .env file.
+        initialize_openai_client() -> None:
+            Initialize the OpenAI client with the API key from environment variables.
+        load_instructions() -> str:
+            Load instructions for the assistant from the specified JSON file
     """
 
     def __init__(self, dotenv_path: str, config_path: str, instruction_path: str, assistant_save_path: str) -> None:
