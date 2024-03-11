@@ -11,6 +11,7 @@ python = ">=3.11,<3.13"
 python-dotenv = "^1.0.1"
 pyautogen = "^0.2.17"
 openai = "^1.13.3"
+colorama = "^0.4.6"
 
 
 [build-system]
