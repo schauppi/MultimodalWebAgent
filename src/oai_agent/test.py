@@ -10,8 +10,6 @@ from src.tools.wait import wait
 from src.tools.click_element import click_element
 from src.tools.input_text import input_text
 
-read_url("https://huggingface.co/")
+read_url("https://www.linkedin.com")
 
-time.sleep(5)
-
-input_text("search for 'mistral'")
+time.sleep(60)
