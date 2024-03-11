@@ -4,7 +4,7 @@ from src.configs.logging.logging_config import setup_logging
 import logging
 
 setup_logging()
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 
 def read_url(url: str) -> str:
