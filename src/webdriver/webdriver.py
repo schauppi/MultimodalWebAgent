@@ -1,6 +1,11 @@
 from playwright.sync_api import sync_playwright
+from src.configs.logging.logging_config import setup_logging
 import locale
 from tzlocal import get_localzone_name
+import logging
+
+setup_logging()
+logger = logging.getLogger(__name__)
 
 
 class WebDriver:
@@ -71,24 +76,29 @@ class WebDriver:
         timezone_id = get_localzone_name()
         system_locale = locale.getdefaultlocale()
 
-        playwright = sync_playwright().start()
-        browser = playwright.chromium.launch_persistent_context(
-            user_data_dir="src/data/chrome_profile",
-            headless=False,
-            args=[
-                "--disable-gpu",
-                "--disable-dev-shm-usage",
-                "--no-sandbox",
-                "--disable-web-security",
-                "--allow-running-insecure-content",
-            ],
-            locale=system_locale[0],
-            timezone_id=timezone_id,
-        )
-        self.playwright = playwright
-        self.browser = browser
-        self.page = browser.new_page()
-        self.page.set_viewport_size({"width": 960, "height": 1080})
+        try:
+            playwright = sync_playwright().start()
+            browser = playwright.chromium.launch_persistent_context(
+                user_data_dir="src/data/chrome_profile",
+                headless=False,
+                args=[
+                    "--disable-gpu",
+                    "--disable-dev-shm-usage",
+                    "--no-sandbox",
+                    "--disable-web-security",
+                    "--allow-running-insecure-content",
+                ],
+                locale=system_locale[0],
+                timezone_id=timezone_id,
+            )
+            self.playwright = playwright
+            self.browser = browser
+            self.page = browser.new_page()
+            self.page.set_viewport_size({"width": 960, "height": 1080})
+            logger.info("Browser instance created successfully.")
+        except Exception as e:
+            logger.error("Failed to create browser instance.", exc_info=True)
+            raise e
 
     def getDriver(self):
         """
@@ -112,8 +122,13 @@ class WebDriver:
         Returns:
             None
         """
-        self.browser.close()
-        self.playwright.stop()
+        try:
+            self.browser.close()
+            self.playwright.stop()
+            logger.info("Browser instance closed successfully.")
+        except Exception as e:
+            logger.error("Failed to close browser instance.", exc_info=True)
+            raise e
 
     def closeCurrentTab(self):
         """
@@ -126,6 +141,11 @@ class WebDriver:
             None
         """
         if self.page and not self.page.is_closed():
-            self.page.close()
-            self.page = self.browser.new_page()
-            self.page.set_viewport_size({"width": 960, "height": 1080})
+            try:
+                self.page.close()
+                self.page = self.browser.new_page()
+                self.page.set_viewport_size({"width": 960, "height": 1080})
+                logger.info("Current tab closed successfully.")
+            except Exception as e:
+                logger.error("Failed to close current tab.", exc_info=True)
+                raise e
