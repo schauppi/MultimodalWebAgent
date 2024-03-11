@@ -10,6 +10,12 @@ logger = logging.getLogger(__name__)
 class ToolDefinitionFactory:
     """
     Factory class for creating tool definitions.
+
+    Methods:
+        load_config(path: str) -> dict:
+            Load the configuration data from the configuration file.
+        create_tool_definition(tool_type: str) -> dict:
+            Create a tool definition based on the tool type.
     """
 
     def __init__(self, config_path: str) -> None:
