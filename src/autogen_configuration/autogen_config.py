@@ -23,6 +23,15 @@ except Exception as e:
 class GetConfig:
     """
     Get and enrich config from config file.
+
+    Methods:
+        __init__():
+            Initialize with API key and config list.
+        base_dir() -> str:
+            Returns the base directory path.
+        load_and_enrich_config_list() -> dict:
+            Loads config list from a JSON file and enriches it with the API key.
+
     """
 
     def __init__(self) -> None:
@@ -78,3 +87,7 @@ class GetConfig:
                 "Failed to load or enrich the config list.", exc_info=e)
             config_list = []
         return {'config_list': config_list}
+
+
+# test
+config = GetConfig()
