@@ -7,6 +7,12 @@
             "formatter": "simple",
             "stream": "ext://sys.stdout"
         },
+        "console_warning": {
+            "class": "logging.StreamHandler",
+            "level": "WARNING",
+            "formatter": "simple",
+            "stream": "ext://sys.stdout"
+        },
         "console_error": {
             "class": "logging.StreamHandler",
             "level": "ERROR",
@@ -24,6 +30,6 @@
     },
     "root": {
         "level": "INFO",
-        "handlers": ["console_info", "console_error"]
+        "handlers": ["console_info", "console_warning", "console_error"]
     }
 }
