@@ -1,6 +1,6 @@
 # MultimodalWebAgent
 
-[![Watch the video](https://img.youtube.com/vi/aB6rJyS4mp4/0.jpg)](https://www.youtube.com/watch?v=aB6rJyS4mp4&t=17s)
+[![Watch the video](https://img.youtube.com/vi/aB6rJyS4mp4/0.jpg)](https://www.youtube.com/watch?v=aB6rJyS4mp4&t=0s)
 
 ## Introduction
 
