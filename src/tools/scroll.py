@@ -6,7 +6,7 @@ import time
 from typing import Literal
 
 setup_logging()
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 
 def scroll(direction: Literal["up", "down"]) -> str:

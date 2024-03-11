@@ -5,7 +5,7 @@ from tzlocal import get_localzone_name
 import logging
 
 setup_logging()
-logger = logging.getLogger(__name__)
+logger = logging.getLogger()
 
 
 class WebDriver:
