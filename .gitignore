@@ -160,3 +160,4 @@ cython_debug/
 #.idea/
 
 src/data/chrome_profile
+src/data/screenshots
