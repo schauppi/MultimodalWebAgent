@@ -1,5 +1,6 @@
 from src.webdriver.webdriver import WebDriver
 from src.configs.logging.logging_config import setup_logging
+from src.tools.utils.get_webdriver_instance import get_webdriver_instance
 
 import logging
 import time
@@ -24,8 +25,7 @@ def scroll(direction: Literal["up", "down"]) -> str:
         if direction not in ["up", "down"]:
             raise ValueError("Direction must be either 'up' or 'down'.")
 
-        webdriver = WebDriver.getInstance()
-        driver = webdriver.getDriver()
+        driver = get_webdriver_instance()
 
         scroll_amount = 500
         if direction == "up":
