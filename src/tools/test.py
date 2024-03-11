@@ -8,11 +8,10 @@ from src.tools.jump_to_search_engine import jump_to_search_engine
 from src.tools.go_back import go_back
 from src.tools.wait import wait
 from src.tools.click_element import click_element
+from src.tools.input_text import input_text
 
-read_url("orf.at")
-
-time.sleep(5)
-
-click_element("CLick on the 'Sports' banner with the football player")
+read_url("https://huggingface.co/")
 
 time.sleep(5)
+
+input_text("search for 'mistral'")

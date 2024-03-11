@@ -148,7 +148,6 @@ function markClickableElements() {
     return element.tagName === "A" ||
       element.tagName === "TEXTAREA" ||
       element.tagName === "SELECT" ||
-      element.tagName === "BUTTON" ||
       element.onclick != null ||
       window.getComputedStyle(element).cursor == "pointer";
   });
@@ -159,8 +158,6 @@ function markInputElements() {
     return element.tagName === "INPUT";
   });
 }
-
-
 
 function markAllElements() {
   return markElements((element) => {
