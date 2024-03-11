@@ -5,6 +5,9 @@ description = ""
 authors = ["schauppi <46676413+schauppi@users.noreply.github.com>"]
 license = "Apache-2.0"
 readme = "README.md"
+packages = [
+    { include = "src", from = ".", format = "sdist" },
+]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
@@ -21,3 +24,6 @@ instructor = "^0.6.4"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+webagent = 'src.oai_agent.oai_agent:main'
