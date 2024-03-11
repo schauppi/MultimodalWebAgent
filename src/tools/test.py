@@ -9,9 +9,6 @@ from src.tools.go_back import go_back
 from src.tools.wait import wait
 from src.tools.click_element import click_element
 from src.tools.input_text import input_text
+from src.tools.save_to_file import save_to_file
 
-read_url("https://huggingface.co/")
-
-time.sleep(5)
-
-input_text("search for 'mistral'")
+save_to_file("test")
