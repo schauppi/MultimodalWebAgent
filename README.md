@@ -1,6 +1,6 @@
 # MultimodalWebAgent
 
-[![Watch the video](https://img.youtube.com/vi/aB6rJyS4mp4/0.jpg)](https://www.youtube.com/watch?v=aB6rJyS4mp4&t=0s)
+[![Watch the video](https://img.youtube.com/vi/jQ2Os682Ybs/0.jpg)](https://www.youtube.com/watch?v=jQ2Os682Ybs&t=0s)
 
 ## Introduction
 
@@ -30,3 +30,9 @@ The prompt has to be carefully crafted to get good results. F.e. the prompt desc
 
 - [ ] Test: Improve the agent to work with more general prompts.
 - [ ] Test: Implement an `autogen.GroupChat`with an additional Planner and QA agent. To refine and correct the steps on the fly
+
+Multimodal Webagent created with AutoGen and OpenAI's Assistants API
+
+This is a multimodal web agent that can understand and generate natural language and visual content implemented using the [AutoGen](https://microsoft.github.io/autogen/) framework and the [Assistants API](https://platform.openai.com/docs/assistants/overview).It is based on the Paper [WebVoyager: Building an End-to-End Web Agent with Large Multimodal Models](https://arxiv.org/abs/2401.13919).
+
+Link to the Github Repo: https://github.com/schauppi/MultimodalWebAgent
