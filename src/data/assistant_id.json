@@ -38,5 +38,10 @@
         "type": "BrowsingAgent",
         "id": "asst_YGjquz12EX0M1hgk8QR1sTKY",
         "date": "2024-03-13 18:38:23.557789"
+    },
+    {
+        "type": "QualityAssuranceAgent",
+        "id": "asst_ZZz4VpPKE2sAyaC4M7jLfeTO",
+        "date": "2024-03-13 18:49:35.241697"
     }
 ]
