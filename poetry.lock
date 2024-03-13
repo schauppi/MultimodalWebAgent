@@ -160,6 +160,27 @@ tests-mypy = ["mypy (>=1.6)", "pytest-mypy-plugins"]
 tests-no-zope = ["attrs[tests-mypy]", "cloudpickle", "hypothesis", "pympler", "pytest (>=4.3.0)", "pytest-xdist[psutil]"]
 
 [[package]]
+name = "beautifulsoup4"
+version = "4.12.3"
+description = "Screen-scraping library"
+optional = false
+python-versions = ">=3.6.0"
+files = [
+    {file = "beautifulsoup4-4.12.3-py3-none-any.whl", hash = "sha256:b80878c9f40111313e55da8ba20bdba06d8fa3969fc68304167741bbf9e082ed"},
+    {file = "beautifulsoup4-4.12.3.tar.gz", hash = "sha256:74e3d1928edc070d21748185c46e3fb33490f22f52a3addee9aee0f4f7781051"},
+]
+
+[package.dependencies]
+soupsieve = ">1.2"
+
+[package.extras]
+cchardet = ["cchardet"]
+chardet = ["chardet"]
+charset-normalizer = ["charset-normalizer"]
+html5lib = ["html5lib"]
+lxml = ["lxml"]
+
+[[package]]
 name = "certifi"
 version = "2024.2.2"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -663,6 +684,21 @@ plugins = ["mdit-py-plugins"]
 profiling = ["gprof2dot"]
 rtd = ["jupyter_sphinx", "mdit-py-plugins", "myst-parser", "pyyaml", "sphinx", "sphinx-copybutton", "sphinx-design", "sphinx_book_theme"]
 testing = ["coverage", "pytest", "pytest-cov", "pytest-regressions"]
+
+[[package]]
+name = "markdownify"
+version = "0.11.6"
+description = "Convert HTML to markdown."
+optional = false
+python-versions = "*"
+files = [
+    {file = "markdownify-0.11.6-py3-none-any.whl", hash = "sha256:ba35fe289d5e9073bcd7d2cad629278fe25f1a93741fcdc0bfb4f009076d8324"},
+    {file = "markdownify-0.11.6.tar.gz", hash = "sha256:009b240e0c9f4c8eaf1d085625dcd4011e12f0f8cec55dedf9ea6f7655e49bfe"},
+]
+
+[package.dependencies]
+beautifulsoup4 = ">=4.9,<5"
+six = ">=1.15,<2"
 
 [[package]]
 name = "mdurl"
@@ -1315,6 +1351,17 @@ pygments = ">=2.13.0,<3.0.0"
 jupyter = ["ipywidgets (>=7.5.1,<9)"]
 
 [[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+
+[[package]]
 name = "sniffio"
 version = "1.3.1"
 description = "Sniff out which async library your code is running under"
@@ -1323,6 +1370,17 @@ python-versions = ">=3.7"
 files = [
     {file = "sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"},
     {file = "sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc"},
+]
+
+[[package]]
+name = "soupsieve"
+version = "2.5"
+description = "A modern CSS selector implementation for Beautiful Soup."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "soupsieve-2.5-py3-none-any.whl", hash = "sha256:eaa337ff55a1579b6549dc679565eac1e3d000563bcb1c8ab0d0fefbc0c2cdc7"},
+    {file = "soupsieve-2.5.tar.gz", hash = "sha256:5663d5a7b3bfaeee0bc4372e7fc48f9cff4940b3eec54a6451cc5299f1097690"},
 ]
 
 [[package]]
@@ -1619,4 +1677,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.13"
-content-hash = "7ccb5f1611a79b47f167c29276069435616f9c443a98ee27f879d0966c6f84ad"
+content-hash = "793314e2e7726991863e25e3def6af7063035c43a7fed0a005fe2e9ee1a9bf69"
