@@ -25,7 +25,7 @@ class OAIAssistantCreator:
             Load instructions for the assistant from the specified JSON file
     """
 
-    def __init__(self, dotenv_path: str, config_path: str, instruction_path: str, assistant_save_path: str) -> None:
+    def __init__(self, dotenv_path: str, config_path: str, instruction_path: str, assistant_save_path: str, assistant_name: str) -> None:
         """
         Initialize the creator with paths to necessary configurations and instructions.
 
@@ -34,6 +34,7 @@ class OAIAssistantCreator:
             config_path (str): Path to the tool definitions JSON file.
             instruction_path (str): Path to the instructions JSON file.
             assistant_save_path (str): Path to the file to save the assistant ID.
+            assistant_name (str): Name of the assistant to be created.
 
         Returns:
             None
@@ -42,6 +43,7 @@ class OAIAssistantCreator:
         self.config_path = config_path
         self.instruction_path = instruction_path
         self.assistant_save_path = assistant_save_path
+        self.assistant_name = assistant_name
         self.client = None
         logger.info(
             "OAIAssistantCreator initialized with config and instruction paths.")
@@ -119,7 +121,7 @@ class OAIAssistantCreator:
                 model=os.environ.get('OPENAI_MODEL', ''),
                 instructions=instruction,
                 tools=oai_tools,
-                name="BrowsingAgent"
+                name=self.assistant_name
             )
             logger.info(
                 f"Assistant created successfully with ID: {assistant.id}")
@@ -139,7 +141,7 @@ class OAIAssistantCreator:
             None
         """
         data_to_append = {
-            "type": "oai_browsing_assistant",
+            "type": self.assistant_name,
             "id": assistant_id,
             "date": str(datetime.now())
         }
@@ -187,5 +189,5 @@ class OAIAssistantCreator:
     assistant_save_path = "src/data/assistant_id.json"
 
     creator = OAIAssistantCreator(
-        dotenv_path, config_path, instruction_path, assistant_save_path)
+        dotenv_path, config_path, instruction_path, assistant_save_path, "BrowsingAgent")
     creator.run()"""
