@@ -61,3 +61,7 @@ def get_markdown_information() -> str:
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
         return "An error occurred. Please check the logs for more details."
+
+
+# test
+read_url
