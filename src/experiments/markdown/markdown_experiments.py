@@ -1,13 +1,11 @@
-from bs4 import BeautifulSoup
-from src.webdriver.webdriver import WebDriver
 from src.tools.utils.get_webdriver_instance import get_webdriver_instance
 from src.configs.logging.logging_config import setup_logging
-
-from src.tools.read_url import read_url
 
 import markdownify
 import re
 import logging
+import os
+from bs4 import BeautifulSoup
 
 setup_logging()
 logger = logging.getLogger()
@@ -46,9 +44,17 @@ def get_markdown_information() -> str:
 
         webpage_text = (re.sub(r"\n{2,}", "\n\n", webpage_text).strip())
 
-        with open('src/experiments/markdown/data/markdown_text.md', 'w') as f:
-            f.write(webpage_text)
-        logger.info("Webpage content successfully converted to markdown.")
+        output_dir = 'src/experiments/markdown/data'
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        output_file = os.path.join(output_dir, 'markdown_text.md')
+        try:
+            with open(output_file, 'w') as f:
+                f.write(webpage_text)
+            logger.info("Webpage content successfully converted to markdown.")
+        except Exception as e:
+            logger.error(f"An error occurred while writing to file: {str(e)}")
 
         return webpage_text
 
