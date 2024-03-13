@@ -1,0 +1,19 @@
+{
+    "analyze_content": {
+      "name": "analyze_content",
+      "description": "Analyzes the content of a webpage based on a screenshot and a user query, and returns a response string with insights and answers.",
+      "parameters": {
+        "query": {
+          "description": "A query string representing the user's inquiry about the contents of the current web browser window.",
+          "examples": [
+            "What are the main headlines in this news article screenshot?",
+            "Is there any contact information available on this page?"
+          ],
+          "title": "Query",
+          "type": "string"
+        }
+      },
+      "required": ["query"]
+    }
+  }
+  
