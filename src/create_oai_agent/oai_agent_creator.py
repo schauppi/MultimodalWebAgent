@@ -25,7 +25,7 @@ class OAIAssistantCreator:
             Load instructions for the assistant from the specified JSON file
     """
 
-    def __init__(self, dotenv_path: str, config_path: str, instruction_path: str, assistant_save_path: str, assistant_name: str) -> None:
+    def __init__(self, dotenv_path: str, config_path: str, instruction_path: str, assistant_save_path: str, assistant_type: str) -> None:
         """
         Initialize the creator with paths to necessary configurations and instructions.
 
@@ -43,7 +43,7 @@ class OAIAssistantCreator:
         self.config_path = config_path
         self.instruction_path = instruction_path
         self.assistant_save_path = assistant_save_path
-        self.assistant_name = assistant_name
+        self.assistant_name = assistant_type
         self.client = None
         logger.info(
             "OAIAssistantCreator initialized with config and instruction paths.")
@@ -121,7 +121,7 @@ class OAIAssistantCreator:
                 model=os.environ.get('OPENAI_MODEL', ''),
                 instructions=instruction,
                 tools=oai_tools,
-                name=self.assistant_name
+                name=self.assistant_type
             )
             logger.info(
                 f"Assistant created successfully with ID: {assistant.id}")
@@ -141,7 +141,7 @@ class OAIAssistantCreator:
             None
         """
         data_to_append = {
-            "type": self.assistant_name,
+            "type": self.assistant_type,
             "id": assistant_id,
             "date": str(datetime.now())
         }
