@@ -8,12 +8,12 @@ setup_logging()
 logger = logging.getLogger()
 
 
-def create_agent():
+def create_agent(assistant_type: str):
     """
     Create an OpenAI assistant with the specified tools and instructions.
 
     Args:
-        None
+        assistant_type (str): The type of assistant to create.
 
     Returns:
         None
@@ -26,7 +26,7 @@ def create_agent():
         assistant_save_path = "src/data/assistant_id.json"
         logger.info("Creating OpenAI Assistant...")
         creator = OAIAssistantCreator(
-            dotenv_path, config_path, instruction_path, assistant_save_path)
+            dotenv_path, config_path, instruction_path, assistant_save_path, assistant_type)
         creator.run()
     except Exception as e:
         logger.error(f"An error occurred while creating the agent: {str(e)}")

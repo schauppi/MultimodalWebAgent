@@ -8,12 +8,12 @@ setup_logging()
 logger = logging.getLogger()
 
 
-def load_assistant_id():
+def load_assistant_id(assistant_type: str) -> str:
     """
     Load the assistant ID from the assistant ID file.
 
     Args:
-    - None
+    - assistant_type (str): The type of assistant to load.
 
     Returns:
     - assistant_id (str): The assistant ID. 
@@ -21,7 +21,9 @@ def load_assistant_id():
     try:
         with open("src/data/assistant_id.json", "r") as file:
             data = json.load(file)
-            latest_entry = max(data, key=lambda x: datetime.datetime.strptime(
+            filtered_data = [
+                entry for entry in data if entry['type'] == assistant_type]
+            latest_entry = max(filtered_data, key=lambda x: datetime.datetime.strptime(
                 x['date'], "%Y-%m-%d %H:%M:%S.%f"))
             assistant_id = latest_entry['id']
     except FileNotFoundError:

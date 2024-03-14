@@ -24,7 +24,7 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 
-def configure_agent():
+def configure_agent(assistant_type: str) -> GPTAssistantAgent:
     """
     Configure the GPT Assistant Agent with the specified tools and instructions.
 
@@ -36,7 +36,7 @@ def configure_agent():
     """
     try:
         logger.info("Configuring GPT Assistant Agent...")
-        assistant_id = load_assistant_id()
+        assistant_id = load_assistant_id(assistant_type)
         llm_config = GetConfig().config_list
         oai_config = {
             "config_list": llm_config["config_list"], "assistant_id": assistant_id}
@@ -47,7 +47,7 @@ def configure_agent():
         return gpt_assistant
     except openai.NotFoundError:
         logger.warning("Assistant not found. Creating new assistant...")
-        create_agent()
+        create_agent(assistant_type)
         return configure_agent()
     except Exception as e:
         logger.error(f"Unexpected error during agent configuration: {str(e)}")
@@ -115,10 +115,14 @@ def main():
         None
     """
     try:
-        gpt_assistant = configure_agent()
+        gpt_assistant = configure_agent("BrowsingAgent")
         register_functions(gpt_assistant)
         user_proxy = create_user_proxy()
         user_proxy.initiate_chat(
             gpt_assistant, message=prompt)
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
+
+
+if __name__ == "__main__":
+    main()
