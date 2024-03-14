@@ -5,7 +5,3 @@ from src.oai_agent.oai_agent import configure_agent
 
 browsing_agent = configure_agent("BrowsingAgent")
 qa_agent = configure_agent("QualityAssuranceAgent")
-
-browsing_agent.name = "BrowsingAgent"
-
-print(browsing_agent.name)
