@@ -43,5 +43,15 @@
         "type": "QualityAssuranceAgent",
         "id": "asst_ZZz4VpPKE2sAyaC4M7jLfeTO",
         "date": "2024-03-13 18:49:35.241697"
+    },
+    {
+        "type": "BrowsingAgent",
+        "id": "asst_Vi1AzqFaA7Nht0MaiAEopxER",
+        "date": "2024-03-14 10:26:56.588379"
+    },
+    {
+        "type": "BrowsingAgent",
+        "id": "asst_N1KDDCRI0OyV2EQeNobjVpBj",
+        "date": "2024-03-14 10:28:47.281041"
     }
 ]
