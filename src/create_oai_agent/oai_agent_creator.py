@@ -43,7 +43,7 @@ class OAIAssistantCreator:
         self.config_path = config_path
         self.instruction_path = instruction_path
         self.assistant_save_path = assistant_save_path
-        self.assistant_name = assistant_type
+        self.assistant_type = assistant_type
         self.client = None
         logger.info(
             "OAIAssistantCreator initialized with config and instruction paths.")
