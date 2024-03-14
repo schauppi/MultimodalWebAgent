@@ -41,7 +41,7 @@ def configure_agent(assistant_type: str) -> GPTAssistantAgent:
         oai_config = {
             "config_list": llm_config["config_list"], "assistant_id": assistant_id}
         gpt_assistant = GPTAssistantAgent(
-            name="assistant", instructions=AssistantAgent.DEFAULT_SYSTEM_MESSAGE, llm_config=oai_config
+            name=assistant_type, instructions=AssistantAgent.DEFAULT_SYSTEM_MESSAGE, llm_config=oai_config
         )
         logger.info("GPT Assistant Agent configured.")
         return gpt_assistant
