@@ -19,6 +19,7 @@ tzlocal = "^5.2"
 playwright = "^1.42.0"
 pytest-playwright = "^0.4.4"
 instructor = "^0.6.4"
+pillow = "^10.2.0"
 
 
 [build-system]
