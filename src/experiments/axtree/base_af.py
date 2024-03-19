@@ -28,7 +28,7 @@ def reHighlight(page, client):
     # client.send('DOM.enable')
     axtree = client.send('Accessibility.getFullAXTree')
 
-    with open("src/experiments/agent_subclass/data/axtree.json", "wt") as fh:
+    with open("src/experiments/axtree/data/axtree.json", "wt") as fh:
         fh.write(json.dumps(axtree, indent=4))
     nodesToResolve = []
     for node in axtree["nodes"]:
@@ -104,7 +104,7 @@ def reHighlight(page, client):
                           font=fnt, anchor='rb', align='center')
 
         Image.alpha_composite(base, overlay).save(
-            "src/experiments/agent_subclass/data/test_image.png")
+            "src/experiments/axtree/data/test_image.png")
 
     # Run code to highlight everything
     page.evaluate(""" () => {
