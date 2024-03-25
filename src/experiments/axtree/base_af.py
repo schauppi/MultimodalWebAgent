@@ -12,7 +12,7 @@ def main():
     playwright = sync_playwright().start()
     browser = playwright.chromium.launch(headless=False)
     page = browser.new_page()
-    visit(page, "https://www.amazon.com")
+    visit(page, "https://www.globalsqa.com/demo-site/select-dropdown-menu/")
     client = page.context.new_cdp_session(page)
     while True:
         reHighlight(page, client)
