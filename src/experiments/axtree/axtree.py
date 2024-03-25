@@ -111,7 +111,6 @@ def get_color(idx):
 
 
 def reHighlight(page, client):
-    with open("src/experiments/axtree/data/axtree_2.json", "wt") as fh:
     
     with open(labels_path, "rt") as fh:
         page.evaluate(fh.read())
