@@ -78,9 +78,7 @@ def screenshot(rectangles, page):
 
     overlay.save("src/experiments/axtree/data/overlay.png")
 
-    print(visible_rects)
-
-    return None, None
+    return None, visible_rects
 
 def draw_roi(draw, idx, font, rect):
 
@@ -115,20 +113,40 @@ def reHighlight(page, client):
     with open(labels_path, "rt") as fh:
         page.evaluate(fh.read())
 
-        rectangles = page.evaluate("MultimodalWebSurfer.getInteractiveRects();")
+        rects = page.evaluate("MultimodalWebSurfer.getInteractiveRects();")
 
-        for element_id, details in rectangles.items():
-            tag_name = details["tag_name"]
-            role = details["role"]
-            aria_name = details["aria-name"]
-            rects = details["rects"]
+        """for element_id, details in rectangles.items():
+        tag_name = details["tag_name"]
+        role = details["role"]
+        aria_name = details["aria-name"]
+        rects = details["rects"]"""
 
-            print(f"ID: {element_id}, Tag: {tag_name}, Role: {role}, Aria-Name: {aria_name}, Rects: {rects}")
-            print("---------")
+        print( "rectangles: ", rects)
+        
+        _, visible_rects = screenshot(rects, page)
 
-        #_, visible_rects = screenshot(rectangles, page)
+        text_labels = """
+  { "id": 0, "aria-role": "button",    "html_tag": "button", "actions": ["click"], "name": "browser back button" },
+  { "id": 1, "aria-role": "textbox",   "html_tag": "input, type=text", "actions": ["type"],  "name": "browser address input" },
+  { "id": 2, "aria-role": "searchbox", "html_tag": "input, type=text", "actions": ["type"],  "name": "browser web search input" },
+  { "id": 3, "aria-role": "scrollbar", "html_tag": "button", "actions": ["click"], "name": "browser scroll up control" },
+  { "id": 4, "aria-role": "scrollbar", "html_tag": "button", "actions": ["click"], "name": "browser scroll down control" },"""
+
+        for r in visible_rects:
+            if r in rects:
+                actions = '["click"]'
+                if rects[r]["role"] in ["textbox", "searchbox", "search"]:
+                    actions= '["type"]'
+                
+                text_labels += f"""
+   {{ "id": {r}, "aria-role": "{rects[r]['role']}", "html_tag": "{rects[r]['tag_name']}", "actions": "{actions}", "name": "{rects[r]['aria-name']}" }},"""
+                
+
+        print("text_labels: ", text_labels)
+
+
+        
+
     
-
-
 
 main()
