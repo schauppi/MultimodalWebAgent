@@ -63,7 +63,6 @@ def screenshot(rectangles, page):
             if rect["width"] * rect["height"] == 0:
                 continue
 
-        
             _rect = {}
             _rect.update(rect)
             _rect["y"] += 53
@@ -112,18 +111,23 @@ def get_color(idx):
 
 
 def reHighlight(page, client):
-    """axtree = client.send('Accessibility.getFullAXTree')
-    snapshot = page.accessibility.snapshot()
-
     with open("src/experiments/axtree/data/axtree_2.json", "wt") as fh:
-        fh.write(json.dumps(snapshot, indent=4))"""
     
     with open(labels_path, "rt") as fh:
         page.evaluate(fh.read())
 
         rectangles = page.evaluate("MultimodalWebSurfer.getInteractiveRects();")
 
-        _, visible_rects = screenshot(rectangles, page)
+        for element_id, details in rectangles.items():
+            tag_name = details["tag_name"]
+            role = details["role"]
+            aria_name = details["aria-name"]
+            rects = details["rects"]
+
+            print(f"ID: {element_id}, Tag: {tag_name}, Role: {role}, Aria-Name: {aria_name}, Rects: {rects}")
+            print("---------")
+
+        #_, visible_rects = screenshot(rectangles, page)
     
 
 
