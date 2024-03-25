@@ -172,3 +172,9 @@ function markAllElements() {
       element.tagName === "VIDEO";
   });
 }
+
+function markDropdownElements() {
+  return markElements((element) => {
+    return element.tagName === "SELECT"; 
+  });
+}

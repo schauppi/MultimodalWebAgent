@@ -31,7 +31,7 @@ def format_description(elements: list) -> tuple:
     return bbox_descriptions, bbox_coordinates
 
 
-def highlight_elements(driver, mark: Literal["click", "input", "all", "remove"]):
+def highlight_elements(driver, mark: Literal["click", "input", "all", "remove", "dropdown"]):
     """
     Highlights elements on a webpage based on the mark type.
 
@@ -43,9 +43,9 @@ def highlight_elements(driver, mark: Literal["click", "input", "all", "remove"])
         A tuple containing descriptions and coordinates of marked elements or the driver itself after unmarking elements.
         In case of errors, it returns an error message.
     """
-    if mark not in ["click", "input", "all", "remove"]:
+    if mark not in ["click", "input", "all", "remove", "dropdown"]:
         raise ValueError(
-            "Mark must be either 'click', 'input', 'all' or 'remove'.")
+            "Mark must be either 'click', 'input', 'all', 'remove' or dropdown.")
 
     try:
         with open('src/tools/utils/mark_page.js') as f:
@@ -69,6 +69,13 @@ def highlight_elements(driver, mark: Literal["click", "input", "all", "remove"])
             elements = driver.evaluate(f"""() => {{
                 {mark_page_script}
                 return markAllElements();
+            }}""")
+            bbox_descriptions, bbox_coordinates = format_description(elements)
+            return bbox_descriptions, bbox_coordinates, driver
+        elif mark == "dropdown":
+            elements = driver.evaluate(f"""() => {{
+                {mark_page_script}
+                return markDropdownElements();
             }}""")
             bbox_descriptions, bbox_coordinates = format_description(elements)
             return bbox_descriptions, bbox_coordinates, driver
