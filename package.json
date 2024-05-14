@@ -1,0 +1,11 @@
+{
+    "name": "multimodal-web-agent",
+    "version": "1.0.0",
+    "scripts": {
+      "vercel-build": "sh build.sh"
+    },
+    "dependencies": {
+      "sh": "^1.0.0"
+    }
+  }
+  
