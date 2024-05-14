@@ -1,9 +1,0 @@
-{
-    "name": "multimodal-web-agent",
-    "version": "1.0.0",
-    "scripts": {
-      "install": "curl -sSL https://install.python-poetry.org | python3 - && export PATH=\"$HOME/.local/bin:$PATH\" && poetry install",
-      "build": "poetry run webagent"
-    }
-  }
-  
