@@ -11,9 +11,6 @@
         "src": "/(.*)",
         "dest": "/src/oai_agent/utils/prompt"
       }
-    ],
-    "env": {
-      "OPENAI_API_KEY": "@OPENAI_API_KEY"
-    }
+    ]
   }
   
