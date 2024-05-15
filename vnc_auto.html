@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>noVNC Auto Connect</title>
+</head>
+<body>
+    <script>
+        // Auto-connect to VNC server
+        const urlParams = new URLSearchParams(window.location.search);
+        const host = urlParams.get('host') || window.location.hostname;
+        const port = urlParams.get('port') || '6080';
+        const path = urlParams.get('path') || 'websockify';
+        const password = urlParams.get('password') || '';
+        const autoconnect = urlParams.get('autoconnect') || true;
+        window.location.href = `vnc.html?host=${host}&port=${port}&path=${path}&autoconnect=${autoconnect}&password=${password}`;
+    </script>
+</body>
+</html>

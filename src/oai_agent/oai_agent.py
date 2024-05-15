@@ -25,9 +25,6 @@ from fastapi.middleware.cors import CORSMiddleware
 import websockets
 import json
 import requests
-# import threading
-# import websockify
-# import novnc
 
 from src.webdriver.webdriver import WebDriver
 
@@ -97,17 +94,6 @@ def create_user_proxy():
     logger.info("User Proxy Agent created.")
     return user_proxy
 
-# def start_vnc_server():
-#     logger.info("Starting VNC server...")
-    # websockify_server = websockify.WebSocketServer("localhost", 8080)
-#     novnc_server = novnc.NoVNCServer("localhost", 5900)
-    # websockify_server.start()
-#     novnc_server.start()
-    # return websockify_server, novnc_server
-
-# @app.on_event("startup")
-# async def startup_event():
-    # threading.Thread(target=start_vnc_server).start()
 
 @app.post("/launch-browser")
 def launch_browser():
@@ -140,19 +126,14 @@ def get_response(prompt_request: PromptRequest):
         register_functions(gpt_assistant)
         user_proxy = create_user_proxy();
 
-        # mock browsing through amazon.com
-        driver = WebDriver.getInstance()
-        page = driver.getDriver()
-        page.goto("https://www.amazon.com/")
-        page.waitForSelector("input[id='twotabsearchtextbox']")
-        page.type("input[id='twotabsearchtextbox']", "iphone")
-        page.keyboard.press("Enter")
-        #sleep for 5 seconds
-        page.waitFor(5000)
-        page.waitForSelector("input[id='twotabsearchtextbox']")
+        # driver = WebDriver.getInstance()
+        # page = driver.getDriver()
+        # page.goto("https://www.amazon.com/")
 
-        response = {"data": "Hello, how can I help you?"}
-        # response = user_proxy.initiate_chat(gpt_assistant, message=prompt_request.prompt)
+        # page.waitFor(10000)
+
+        # response = {"data": "Hello, how can I help you?"}
+        response = user_proxy.initiate_chat(gpt_assistant, message=prompt_request.prompt)
         return {"response": response}
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
@@ -164,7 +145,7 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     try:
         # The URL should now be directly passed or managed correctly in the session
-        ws_url = await websocket.receive_text()  # Assuming URL is sent from the client for simplicity
+        ws_url = await websocket.receive_text();
 
         async with websockets.connect(ws_url) as browser_ws:
             async def to_browser():
