@@ -75,16 +75,19 @@ class WebDriver:
         """
         timezone_id = get_localzone_name()
         system_locale = locale.getdefaultlocale()
-
+        if system_locale[0] is None:
+            system_locale = "en-US"
+ 
         try:
             playwright = sync_playwright().start()
             browser = playwright.chromium.launch_persistent_context(
                 user_data_dir="src/data/chrome_profile",
                 headless=False,
                 args=[
+                    "--remote-debugging-port=9222",
                     "--disable-gpu",
-                    "--disable-dev-shm-usage",
-                    "--no-sandbox",
+                    "--disable-dev-shm-usage", 
+                    "--no-sandbox", 
                     "--disable-web-security",
                     "--allow-running-insecure-content",
                 ],

@@ -20,9 +20,14 @@ playwright = "^1.42.0"
 pytest-playwright = "^0.4.4"
 instructor = "^0.6.4"
 
+fastapi = "^0.110.0"
+uvicorn = "^0.29.0"
+websockets = "^12.0"
+websockify = "^0.11.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 webagent = 'src.oai_agent.oai_agent:main'
+runservers = 'src.oai_agent.run:main'

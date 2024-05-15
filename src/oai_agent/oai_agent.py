@@ -1,3 +1,8 @@
+from fastapi import FastAPI, HTTPException, WebSocket
+from pydantic import BaseModel
+import logging
+import autogen
+from autogen.agentchat.contrib.gpt_assistant_agent import GPTAssistantAgent
 from src.configs.logging.logging_config import setup_logging
 from src.oai_agent.utils.load_assistant_id import load_assistant_id
 from src.oai_agent.utils.create_oai_agent import create_agent
@@ -11,29 +16,38 @@ from src.tools.click_element import click_element
 from src.tools.input_text import input_text
 from src.tools.analyze_content import analyze_content
 from src.tools.save_to_file import save_to_file
-from src.oai_agent.utils.prompt import prompt
-
-import logging
-import autogen
-from autogen.agentchat import AssistantAgent
-from autogen.agentchat.contrib.gpt_assistant_agent import GPTAssistantAgent
 
 import openai
+from autogen.agentchat import AssistantAgent
+from autogen.agentchat.contrib.gpt_assistant_agent import GPTAssistantAgent
+from fastapi.middleware.cors import CORSMiddleware
+
+import websockets
+import json
+import requests
+# import threading
+# import websockify
+# import novnc
+
+from src.webdriver.webdriver import WebDriver
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+class PromptRequest(BaseModel):
+    prompt: str
 
 setup_logging()
 logger = logging.getLogger(__name__)
 
-
 def configure_agent(assistant_type: str) -> GPTAssistantAgent:
-    """
-    Configure the GPT Assistant Agent with the specified tools and instructions.
-
-    Args:
-        None
-
-    Returns:
-        GPTAssistantAgent: An instance of the GPTAssistantAgent.
-    """
     try:
         logger.info("Configuring GPT Assistant Agent...")
         assistant_id = load_assistant_id(assistant_type)
@@ -53,17 +67,7 @@ def configure_agent(assistant_type: str) -> GPTAssistantAgent:
         logger.error(f"Unexpected error during agent configuration: {str(e)}")
         raise
 
-
 def register_functions(agent):
-    """
-    Register the functions used by the GPT Assistant Agent.
-
-    Args:
-        agent (GPTAssistantAgent): An instance of the GPTAssistantAgent.
-
-    Returns:
-        None
-    """
     logger.info("Registering functions...")
     function_map = {
         "analyze_content": analyze_content,
@@ -79,17 +83,7 @@ def register_functions(agent):
     agent.register_function(function_map=function_map)
     logger.info("Functions registered.")
 
-
 def create_user_proxy():
-    """
-    Create a User Proxy Agent.
-
-    Args:
-        None
-
-    Returns:
-        UserProxyAgent: An instance of the UserProxyAgent.
-    """
     logger.info("Creating User Proxy Agent...")
     user_proxy = autogen.UserProxyAgent(
         name="user_proxy",
@@ -103,26 +97,95 @@ def create_user_proxy():
     logger.info("User Proxy Agent created.")
     return user_proxy
 
+# def start_vnc_server():
+#     logger.info("Starting VNC server...")
+    # websockify_server = websockify.WebSocketServer("localhost", 8080)
+#     novnc_server = novnc.NoVNCServer("localhost", 5900)
+    # websockify_server.start()
+#     novnc_server.start()
+    # return websockify_server, novnc_server
 
-def main():
-    """
-    Main function to run the GPT Assistant Agent.
+# @app.on_event("startup")
+# async def startup_event():
+    # threading.Thread(target=start_vnc_server).start()
 
-    Args:
-        None
+@app.post("/launch-browser")
+def launch_browser():
+    try:
+        driver = WebDriver.getInstance()
+        page = driver.getDriver()
+        # Fetch all pages from the Chrome instance
+        response = requests.get("http://localhost:9222/json")
+        pages = response.json()
 
-    Returns:
-        None
-    """
+        # Assuming the last page in the list is the right-most tab
+        if pages:
+            right_most_page = pages[-1]  # Get the last tab/page
+            if "webSocketDebuggerUrl" in right_most_page and right_most_page['type'] == 'page':
+                websocket_url = right_most_page["webSocketDebuggerUrl"]
+                return {"websocket_url": websocket_url, "right_most_page": right_most_page}
+            else:
+                raise Exception("Right-most page does not have a WebSocket URL")
+        else:
+            raise Exception("No pages found in the browser session")
+    except Exception as e:
+        logger.error(f"An error occurred: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
+@app.post("/get-web-agent-response")
+def get_response(prompt_request: PromptRequest):
     try:
         gpt_assistant = configure_agent("BrowsingAgent")
         register_functions(gpt_assistant)
-        user_proxy = create_user_proxy()
-        user_proxy.initiate_chat(
-            gpt_assistant, message=prompt)
+        user_proxy = create_user_proxy();
+
+        # mock browsing through amazon.com
+        driver = WebDriver.getInstance()
+        page = driver.getDriver()
+        page.goto("https://www.amazon.com/")
+        page.waitForSelector("input[id='twotabsearchtextbox']")
+        page.type("input[id='twotabsearchtextbox']", "iphone")
+        page.keyboard.press("Enter")
+        #sleep for 5 seconds
+        page.waitFor(5000)
+        page.waitForSelector("input[id='twotabsearchtextbox']")
+
+        response = {"data": "Hello, how can I help you?"}
+        # response = user_proxy.initiate_chat(gpt_assistant, message=prompt_request.prompt)
+        return {"response": response}
     except Exception as e:
         logger.error(f"An error occurred: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
+
+@app.websocket("/cdp")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    try:
+        # The URL should now be directly passed or managed correctly in the session
+        ws_url = await websocket.receive_text()  # Assuming URL is sent from the client for simplicity
+
+        async with websockets.connect(ws_url) as browser_ws:
+            async def to_browser():
+                try:
+                    async for message in websocket.iter_text():
+                        await browser_ws.send(message)
+                except Exception as e:
+                    logger.error(f"Error in to_browser: {str(e)}")
+
+            async def from_browser():
+                try:
+                    async for message in browser_ws:
+                        await websocket.send_text(message)
+                except Exception as e:
+                    logger.error(f"Error in from_browser: {str(e)}")
+
+            await asyncio.gather(to_browser(), from_browser())
+    except Exception as e:
+        logger.error(f"WebSocket connection error: {str(e)}")
+        await websocket.close()
 
 if __name__ == "__main__":
-    main()
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

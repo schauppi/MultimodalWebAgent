@@ -11,3 +11,5 @@ poetry install
 
 # Run the webagent
 poetry run webagent
+# poetry run uvicorn src.oai_agent.oai_agent:app --reload
+
